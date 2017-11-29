@@ -51,4 +51,25 @@ describe('categories', () => {
             category = body;
         })
     );
+
+    it('/DELETE by id', () => {
+        let categories = null;
+        return request.post('/api/categories')
+            .send(category)
+            .then(res => {
+                categories = res.body;
+                return request.delete(`/api/categories/${categories._id}`);
+            })
+            .then(res => {
+                assert.deepEqual(res.body, { removed: true });
+                return request.get(`/api/categories/${categories._id}`);
+            })
+            .then(
+                () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
+
+    });
 });
