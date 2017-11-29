@@ -10,6 +10,8 @@ const errorHandler = require('./error-handler')();
 
 app.use(morgan('dev'));
 app.use(cors);
+
+
 // Redirect http to https in production
 if(process.env.NODE_ENV === 'production') {
     app.use(redirectHttp);
@@ -17,13 +19,11 @@ if(process.env.NODE_ENV === 'production') {
 app.use(express.static('./public'));
 
 /* routes */
-// const album = require('./routes/albums');
-// const images = require('./routes/images');
+const category = require('./routes/categories');
 
 
 app.use(checkDb);
-// app.use('/api/albums', album);
-// app.use('/api/images', images);
+app.use('/api/categories', category);
 
 app.use(errorHandler);
 
