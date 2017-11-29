@@ -32,9 +32,15 @@ describe('categories', () => {
             });
     });
 
-    // it('/GET returns 404 for bad id given', () => {
-
-    // })
+    it('/GET returns 404 for bad id given', () => {
+        return request.get('/api/categories/5a1f0513666edce9c5d4be4e')
+            .then(
+                () => { throw new Error('Unexpected successful response'); },
+                err => {
+                    assert.equal(err.status, 404);
+                }
+            );
+    });
 
     it('POST', () => request 
         .post('/api/categories')
