@@ -30,6 +30,17 @@ router
             .then(saved => res.send(saved))
             .catch(next);
     })
+
+    .delete('/:id', (req, res, next) => {
+        Category.findByIdAndRemove(req.params.id)
+            .then(result => {
+                const exists = result != null;
+                res.json({
+                    removed: exists
+                });
+            })
+            .catch(next);
+    })
 ;
 
 module.exports = router;
