@@ -1,0 +1,38 @@
+{
+  "name": "budget-tracker-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint .",
+    "pretest": "npm run lint",
+    "test": "npm run mocha",
+    "mocha": "mocha --recursive",
+    "test:dev": "nodemon --exec 'npm run mocha'",
+    "test:unit": "nodemon --exec 'npm run mocha -- ./test/unit'",
+    "test:e2e": "nodemon --exec 'npm run mocha -- ./test/e2e'",
+    "start": "node server.js",
+    "start:dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zac-L/budget-tracker-server.git"
+  },
+  "author": "Zachary Lichens <zacharylichens@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zac-L/budget-tracker-server/issues"
+  },
+  "homepage": "https://github.com/Zac-L/budget-tracker-server#readme",
+  "dependencies": {
+    "express": "^4.16.2",
+    "mongoose": "^4.13.5"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^3.0.0",
+    "eslint": "^4.12.0",
+    "mocha": "^4.0.1",
+    "nodemon": "^1.12.1"
+  }
+}
