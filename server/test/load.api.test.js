@@ -7,7 +7,9 @@ describe('test route for simulated errors and loading', () => {
     
         
     it('/GET all', () => request
-        .get('/api/categories')
-        .then(res => assert.deepEqual(res.body, []))
+        .get('/api/test')
+        .then(res => {
+            assert.deepEqual(res.body, { answer: 'vanilla response' });
+        })
     );
 });
