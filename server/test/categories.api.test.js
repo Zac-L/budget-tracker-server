@@ -1,19 +1,13 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const assert = chai.assert;
-chai.use(chaiHttp);
-
-const connection = require('../lib/setup-mongoose');
+const { assert } = require('chai');
 const db = require('./db');
-const app = require('../lib/app');
+const request = require('./request');
 
 describe('categories', () => {
 
-    before(db.drop(connection));
-    const request = chai.request(app);
+    beforeEach(() => db.drop());
 
+    
     let category = { name: 'Zach', budget: '100' };
-
     it('/GET all', () => request
         .get('/api/categories')
         .then(res => assert.deepEqual(res.body, []))
@@ -51,11 +45,12 @@ describe('categories', () => {
             category = body;
         })
     );
-    let deleteCat = { name: 'Zach', budget: '100' };
+
+    let deleteCategory = { name: 'Zach', budget: '100' };
     it('/DELETE by id', () => {
         let categories = null;
         return request.post('/api/categories')
-            .send(deleteCat)
+            .send(deleteCategory)
             .then(res => {
                 categories = res.body;
                 return request.delete(`/api/categories/${categories._id}`);
@@ -72,10 +67,27 @@ describe('categories', () => {
             );
 
     });
-    let patchCat = { name: 'Zach', budget: '100' };
+
+    // Built this test out, have not written the route for it yet. Will when I have time. 
+    let putCategory = { name: 'Zach', budget: '100' };
+    it.skip('/PUT updates entire object', () => {
+        return request.post('/api/categories')
+            .send(putCategory)
+            .then(({ body: resPut }) => {
+                assert.ok(resPut._id);
+                resPut.name = 'Mary';
+                return request.put(`/api/categories/${resPut._id}`)
+                    .send({ name: 'Mary' })
+                    .then(({ body: putRes }) => {
+                        assert.deepEqual(resPut.name, putRes.name);
+                    });
+            });
+    });
+
+    let patchCategory = { name: 'Zach', budget: '100' };
     it('patches by id', () => {
         return request.post('/api/categories')
-            .send(patchCat)
+            .send(patchCategory)
             .then(({ body: resUpdate }) => {
                 assert.ok(resUpdate._id);
                 resUpdate.name = 'Bob';
