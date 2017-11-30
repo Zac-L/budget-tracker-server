@@ -1,7 +1,6 @@
 
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser').json();
 const Category = require('../models/category');
 
 router
@@ -25,7 +24,7 @@ router
 
     })
 
-    .post('/', bodyParser, (req, res, next) => {
+    .post('/', (req, res, next) => {
         new Category(req.body)
             .save()
             .then(saved => res.send(saved))
@@ -43,9 +42,7 @@ router
             .catch(next);
     })
 
-    .patch('/:id',bodyParser, (req, res, next) => {
-        console.log(req.body);
-        console.log(req.params.id);
+    .patch('/:id', (req, res, next) => {
         Category.findByIdAndUpdate(
             req.params.id,
             { $set: req.body },
@@ -54,7 +51,6 @@ router
             .lean()
             .then(mongoRes => res.send(mongoRes))
             .catch(next);
-    })
-;
+    });
 
 module.exports = router;
