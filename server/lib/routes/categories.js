@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser').json();
@@ -39,6 +40,19 @@ router
                     removed: exists
                 });
             })
+            .catch(next);
+    })
+
+    .patch('/:id',bodyParser, (req, res, next) => {
+        console.log(req.body);
+        console.log(req.params.id);
+        Category.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        )
+            .lean()
+            .then(mongoRes => res.send(mongoRes))
             .catch(next);
     })
 ;
