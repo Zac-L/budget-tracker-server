@@ -72,4 +72,20 @@ describe('categories', () => {
             );
 
     });
+
+    it.only('patches an event', () => {
+        return request.post('/api/categories')
+            .send(category)
+            .then(({ body: resUpdate }) => {
+                assert.ok(resUpdate._id);
+                resUpdate.name = 'Bob';
+                return request.patch(`/api/categories/${resUpdate._id}`)
+                    .send({ name: 'Bob' })
+                    .then(({ body: updatedRes }) => {
+                        console.log('before patch: ',resUpdate);
+                        console.log('after patch: ',updatedRes);
+                        assert.deepEqual(resUpdate.name, updatedRes.name);
+                    });
+            });
+    });
 });
