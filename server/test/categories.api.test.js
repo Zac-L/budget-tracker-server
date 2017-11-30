@@ -51,11 +51,11 @@ describe('categories', () => {
             category = body;
         })
     );
-
-    it.skip('/DELETE by id', () => {
+    let deleteCat = { name: 'Zach', budget: '100' };
+    it('/DELETE by id', () => {
         let categories = null;
         return request.post('/api/categories')
-            .send(category)
+            .send(deleteCat)
             .then(res => {
                 categories = res.body;
                 return request.delete(`/api/categories/${categories._id}`);
@@ -72,20 +72,19 @@ describe('categories', () => {
             );
 
     });
-
-    it.only('patches an event', () => {
+    let patchCat = { name: 'Zach', budget: '100' };
+    it('patches by id', () => {
         return request.post('/api/categories')
-            .send(category)
+            .send(patchCat)
             .then(({ body: resUpdate }) => {
                 assert.ok(resUpdate._id);
                 resUpdate.name = 'Bob';
                 return request.patch(`/api/categories/${resUpdate._id}`)
                     .send({ name: 'Bob' })
                     .then(({ body: updatedRes }) => {
-                        console.log('before patch: ',resUpdate);
-                        console.log('after patch: ',updatedRes);
                         assert.deepEqual(resUpdate.name, updatedRes.name);
                     });
             });
     });
+
 });
