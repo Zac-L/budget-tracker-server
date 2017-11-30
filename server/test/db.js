@@ -1,13 +1,12 @@
+const connect = require('../lib/connect');
+const url = 'mongodb://localhost:27017/budget-tracker-test';
+const mongoose = require('mongoose');
+
+before(() => connect(url));
+after(() => mongoose.connection.close());
+
 module.exports = {
-    drop(connection) {
-        return () => {
-            return new Promise((resolve, reject) => {
-                const drop = () => connection.db.dropDatabase((err, val) => {
-                    err ? reject(err) : resolve(val);
-                });
-                if (connection.readyState === 1) drop();
-                else connection.on('open', drop);
-            });
-        };
+    drop() {
+        return mongoose.connection.dropDatabase();
     }
 };
