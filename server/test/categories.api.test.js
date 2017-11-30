@@ -68,7 +68,7 @@ describe('categories', () => {
 
     });
 
-    // Built this test out, have not written the route for it yet. Will when I have time. 
+    // Built this test out, have not written the route for it yet. Not sure if I will since I have patch route working 
     let putCategory = { name: 'Zach', budget: '100' };
     it.skip('/PUT updates entire object', () => {
         return request.post('/api/categories')
