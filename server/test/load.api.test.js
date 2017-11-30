@@ -6,7 +6,7 @@ describe('test route for simulated errors and loading', () => {
     beforeEach(() => db.drop());
     
         
-    it('/GET all', () => request
+    it('/GET test response', () => request
         .get('/api/test')
         .then(res => {
             assert.deepEqual(res.body, { answer: 'vanilla response' });
