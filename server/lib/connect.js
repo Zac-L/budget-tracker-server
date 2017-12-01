@@ -1,6 +1,6 @@
 /* eslint no-console: "off" */
 const mongoose = require('mongoose');
-mongoose.promise = Promise;
+mongoose.Promise = require('bluebird');
 const defaultUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/budget-tracker';
 
 module.exports = function(dbUri = defaultUri) {
