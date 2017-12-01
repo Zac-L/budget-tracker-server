@@ -1,11 +1,11 @@
 
 const express = require('express');
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 const Expense = require('../models/expense');
 
 router
     .post('/', (req, res, next) => {
-        return new Expense(req.body)
+        new Expense({...req.body, category: req.params.id})
             .save()
             .then(saved => res.send(saved))
             .catch(next);
