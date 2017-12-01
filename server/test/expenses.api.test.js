@@ -2,7 +2,7 @@ const { assert } = require('chai');
 const db = require('./db');
 const request = require('./request');
 
-describe('expenses route testing', () => {
+describe.only('expenses route testing', () => {
 
     beforeEach(() => db.drop());
 
@@ -15,6 +15,16 @@ describe('expenses route testing', () => {
             category = body;
         })
     );
+
+    it('cannot /POST without category id', () => {
+        return request.post('/api/categories/badid939393/expenses')
+            .send({ name: 'Subway', cost: 5 })
+            .then(
+                // err => console.log(err),
+                () => { throw new Error('unexpected successful response'); },
+                res => assert.equal(res.status, 400)
+            );
+    });
 
     let expense = {
         name: 'Food',
