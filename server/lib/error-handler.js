@@ -26,6 +26,6 @@ module.exports = function createErrorHandler(log = console.log) {
         
         if(showLog) log(code, error);
 
-        res.status(code).json({ error });
+        return res.status(code).json({ error });
     };
 };
