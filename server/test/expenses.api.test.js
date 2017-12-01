@@ -2,7 +2,7 @@ const { assert } = require('chai');
 const db = require('./db');
 const request = require('./request');
 
-describe.only('expenses route testing', () => {
+describe('expenses route testing', () => {
 
     beforeEach(() => db.drop());
 
@@ -20,7 +20,6 @@ describe.only('expenses route testing', () => {
         return request.post('/api/categories/badid939393/expenses')
             .send({ name: 'Subway', cost: 5 })
             .then(
-                // err => console.log(err),
                 () => { throw new Error('unexpected successful response'); },
                 res => assert.equal(res.status, 400)
             );
