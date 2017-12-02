@@ -6,9 +6,9 @@
   "scripts": {
     "lint": "eslint .",
     "pretest": "npm run lint",
-    "test": "npm run mocha",
+    "test": "npm run -s mocha -- ./server/test",
     "mocha": "mocha --recursive",
-    "test:dev": "nodemon --exec \"npm run mocha -- ./server/test\"",
+    "test:dev": "nodemon --exec \"npm run -s mocha -- ./server/test\"",
     "start": "node server.js",
     "start:dev": "nodemon server.js"
   },
