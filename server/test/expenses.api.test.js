@@ -42,4 +42,42 @@ describe('expenses route testing', () => {
                 expense = body;
             });
     });
+
+    const expensesArray = [
+        {
+            name: 'Food',
+            cost: 400,
+            category: {
+                name: 'Mark'
+            }
+            
+        },
+        {
+            name: 'Gas',
+            cost: 100,
+            category: 'Mark'
+        }
+    ];
+
+    it('/GET all expenses', () => {
+        let expenseCollection = expensesArray.map(expense => {
+            expense.category = category._id;
+            return request.post(`/api/categories/${category._id}/expenses`)
+                .send(expense)
+                .then(res => res.body);
+        });
+
+        let saved = null;
+        return Promise.all(expenseCollection)
+            .then(_saved => {
+                saved = _saved;
+                return request.get(`/api/categories/${category._id}/expenses`);
+            })
+            .then(res => {
+                console.log('I am saved: ', saved);
+                console.log('I am res.body: ', res.body);
+                assert.deepEqual(res.body[1].name, saved[1].name);
+                // assert.equal(res.body[1].name, 'Gas');
+            });
+    });
 });
