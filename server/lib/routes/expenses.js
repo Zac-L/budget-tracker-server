@@ -41,6 +41,17 @@ router
             })
             .catch(next);
     })
+
+    .patch('/:id', (req, res, next) => {
+        Expense.findByIdAndUpdate(
+            req.params.id,
+            { $set: req.body },
+            { new: true }
+        )
+            .lean()
+            .then(mongoRes => res.send(mongoRes))
+            .catch(next);
+    })
     
 ;
 
