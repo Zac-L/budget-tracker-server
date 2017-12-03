@@ -24,7 +24,7 @@ const expense = require('./routes/expenses');
 const test = require('./routes/test');
 
 // ## Used Routes ###
-app.use('/api/categories/:id/expenses', expense);
+app.use('/api/categories/:categoryId/expenses', expense);
 app.use('/api/categories', category);
 app.use('/api/test', test);
 
