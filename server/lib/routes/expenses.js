@@ -18,6 +18,18 @@ router
             .then(mongRes => res.send(mongRes))
             .catch(next);
     })
+
+    .get('/:id', (req, res, next) => {
+        Expense.findById(req.params.id)
+            .lean()
+            .then(expense => {
+                if(!expense) {
+                    throw { code: 404, error: `id${req.params.id} does not exist`};
+                }
+                else res.json(expense);
+            })
+            .catch(next);
+    })
     
 ;
 
