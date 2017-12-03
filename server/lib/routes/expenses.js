@@ -5,22 +5,27 @@ const Expense = require('../models/expense');
 
 router
     .post('/', (req, res, next) => {
-        new Expense({...req.body, category: req.params.id})
+        new Expense({...req.body, category: req.params.categoryId})
             .save()
             .then(saved => res.send(saved))
             .catch(next);
     })
-    
+
     .get('/', (req, res, next) => {
-        Expense.find(req.query)
+        Expense.find({
+            category: req.params.categoryId
+        })
             .populate('category', 'name')
             .lean()
             .then(mongRes => res.send(mongRes))
             .catch(next);
     })
 
-    .get('/:id', (req, res, next) => {
-        Expense.findById(req.params.id)
+    .get('/:expenseId', (req, res, next) => {
+        Expense.findOne({
+            _id: req.params.expenseId,
+            category: req.params.categoryId
+        })
             .lean()
             .then(expense => {
                 if(!expense) {
