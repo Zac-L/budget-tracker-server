@@ -10,7 +10,7 @@ router
             .then(saved => res.send(saved))
             .catch(next);
     })
-    // TODO: need to tdd this get route
+    
     .get('/', (req, res, next) => {
         Expense.find(req.query)
             .populate('category', 'name')
