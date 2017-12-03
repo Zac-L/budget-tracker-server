@@ -30,6 +30,17 @@ router
             })
             .catch(next);
     })
+
+    .delete('/:id', (req, res, next) => {
+        Expense.findByIdAndRemove(req.params.id)
+            .then(result => {
+                const exists = result != null;
+                res.json({
+                    removed: exists
+                });
+            })
+            .catch(next);
+    })
     
 ;
 
