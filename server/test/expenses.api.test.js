@@ -15,33 +15,10 @@ describe('expenses route testing', () => {
             category = body;
         })
     );
-
-    it('cannot /POST without category id', () => {
-        return request.post('/api/categories/badid939393/expenses')
-            .send({ name: 'Subway', cost: 5 })
-            .then(
-                () => { throw new Error('unexpected successful response'); },
-                res => assert.equal(res.status, 400)
-            );
-    });
-
     let expense = {
         name: 'Food',
         cost: 400
     };
-
-    it('/POST expense with category id', () => {
-        expense.category = category._id;
-        return request.post(`/api/categories/${category._id}/expenses`)
-            .send(expense)
-            .then(({body}) => {
-                assert.isOk(body._id);
-                for(const key of ['category', 'name', 'cost']) {
-                    assert.equal(body[key], expense[key]);
-                }
-                expense = body;
-            });
-    });
 
     const expensesArray = [
         {
@@ -60,6 +37,29 @@ describe('expenses route testing', () => {
             }
         }
     ];
+
+    it('cannot /POST without category id', () => {
+        return request.post('/api/categories/badid939393/expenses')
+            .send({ name: 'Subway', cost: 5 })
+            .then(
+                () => { throw new Error('unexpected successful response'); },
+                res => assert.equal(res.status, 400)
+            );
+    });
+
+
+    it('/POST expense with category id', () => {
+        expense.category = category._id;
+        return request.post(`/api/categories/${category._id}/expenses`)
+            .send(expense)
+            .then(({body}) => {
+                assert.isOk(body._id);
+                for(const key of ['category', 'name', 'cost']) {
+                    assert.equal(body[key], expense[key]);
+                }
+                expense = body;
+            });
+    });
 
     it('/GET all expenses', () => {
         let expenseCollection = expensesArray.map(expense => {
@@ -113,8 +113,25 @@ describe('expenses route testing', () => {
                 return request.delete(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                assert.deepEqual(res.body, { removed: true });
                 // console.log('removed should be true: ',res.body);
+                assert.deepEqual(res.body, { removed: true });
+            });
+    });
+
+    it('/PATCHES an expense by id', () => {
+        expense.category = category._id;
+        // let savedExpense = null;
+        return request.post(`/api/categories/${category._id}/expenses`)
+            .send(expensesArray[0])
+            .then(({ body: resPatch }) => {
+                assert.ok(resPatch._id);
+                resPatch.name = 'Drink';
+                return request.patch(`/api/categories/${category._id}/expenses/${resPatch._id}`)
+                    .send({ name: 'Drink' })
+                    .then(({ body: patchRes }) => {
+                        // console.log('patched names should be Drink: ', resPatch.name, patchRes.name);
+                        assert.deepEqual(resPatch.name, patchRes.name);
+                    });
             });
     });
 });
