@@ -2,7 +2,7 @@ const { assert } = require('chai');
 const db = require('./db');
 const request = require('./request');
 
-describe('test route for simulated errors and loading', () => {
+describe.skip('test route for simulated errors and loading', () => {
     beforeEach(() => db.drop());
     
         
