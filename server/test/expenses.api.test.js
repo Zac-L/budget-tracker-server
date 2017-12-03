@@ -120,7 +120,6 @@ describe('expenses route testing', () => {
 
     it('/PATCHES an expense by id', () => {
         expense.category = category._id;
-        // let savedExpense = null;
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(({ body: resPatch }) => {
