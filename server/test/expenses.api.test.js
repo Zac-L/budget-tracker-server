@@ -61,7 +61,7 @@ describe('expenses route testing', () => {
             });
     });
 
-    it('/GET all expenses', () => {
+    it('/GET all expenses from a category', () => {
         let expenseCollection = expensesArray.map(expense => {
             expense.category = category._id;
             return request.post(`/api/categories/${category._id}/expenses`)
@@ -84,21 +84,19 @@ describe('expenses route testing', () => {
             });
     });
 
-    it('/GET expenses by id category id', () => {
+    it('/GET expenses by category id', () => {
         expense.category = category._id;
         let savedExpense = null;
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(res => {
-                // console.log('after posting: ',res.body);
+                console.log('after posting: ',res.body);
                 savedExpense = res.body;
-            })
-            .then(() => {
-                // console.log('I am savedExpense: ',savedExpense);
                 return request.get(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                // console.log('I am res body: ',savedExpense);
+                console.log('I am res savedExpense: ',savedExpense);
+                console.log('I am res body: ',res.body);
                 assert.deepEqual(res.body, savedExpense);
             });
     });
