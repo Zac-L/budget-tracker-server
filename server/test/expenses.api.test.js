@@ -80,7 +80,7 @@ describe('expenses route testing', () => {
                 // console.log('I am res.body: ', res.body);
                 // assert.deepEqual(res.body[1], saved[1]); // TODO: figure out why this doesn't work.
                 assert.deepEqual(res.body[1].name, saved[1].name);
-                assert.equal(res.body[1].name, 'Gas');
+                // assert.equal(res.body[1].name, 'Gas');
             });
     });
 
@@ -90,16 +90,28 @@ describe('expenses route testing', () => {
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(res => {
-                console.log('after posting: ',res.body);
+                // console.log('after posting: ',res.body);
                 savedExpense = res.body;
             })
             .then(() => {
-                console.log('I am savedExpense: ',savedExpense);
-                return request.get(`/api/categories/${savedExpense._id}/expenses/${savedExpense._id}`);
+                // console.log('I am savedExpense: ',savedExpense);
+                return request.get(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                console.log('I am res body: ',savedExpense);
+                // console.log('I am res body: ',savedExpense);
                 assert.deepEqual(res.body, savedExpense);
             });
+    });
+
+    it('/DELETE expense by id', () => {
+        expense.category = category._id;
+        let savedExpense = null; // eslint-disable-line
+        return request.post(`/api/categories/${category._id}/expenses`)
+            .send(expensesArray[0])
+            .then(res => {
+                savedExpense = res.body;
+                return request.delete(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
+            })
+            .then(res => assert.deepEqual(res.body, { removed: true }));
     });
 });
