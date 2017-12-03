@@ -6,7 +6,7 @@ describe('expenses route testing', () => {
 
     beforeEach(() => db.drop());
 
-    let category = null; // eslint-disable-line
+    let category = null;
     beforeEach(() => request
         .post('/api/categories')
         .send({ name: 'Mark', budget: 7000 })
@@ -80,13 +80,13 @@ describe('expenses route testing', () => {
                 // console.log('I am res.body: ', res.body);
                 // assert.deepEqual(res.body[1], saved[1]); // TODO: figure out why this doesn't work.
                 assert.deepEqual(res.body[1].name, saved[1].name);
-                // assert.equal(res.body[1].name, 'Gas');
+                assert.equal(res.body[1].name, 'Gas');
             });
     });
 
     it('/GET expenses by id category id', () => {
         expense.category = category._id;
-        let savedExpense = null; // eslint-disable-line
+        let savedExpense = null;
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(res => {
@@ -105,13 +105,16 @@ describe('expenses route testing', () => {
 
     it('/DELETE expense by id', () => {
         expense.category = category._id;
-        let savedExpense = null; // eslint-disable-line
+        let savedExpense = null;
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(res => {
                 savedExpense = res.body;
                 return request.delete(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
-            .then(res => assert.deepEqual(res.body, { removed: true }));
+            .then(res => {
+                assert.deepEqual(res.body, { removed: true });
+                // console.log('removed should be true: ',res.body);
+            });
     });
 });
