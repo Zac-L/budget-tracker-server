@@ -31,12 +31,15 @@ router
     })
 
     .delete('/:id', (req, res, next) => {
-        Category.findByIdAndRemove(req.params.id)
+        Category.findByIdAndRemove(req.params.id, {
+            select: '-name -budget -__v'
+        })
             .then(result => {
-                const exists = result != null;
-                res.json({
-                    removed: exists
-                });
+                res.json(result);
+                // const exists = result != null;
+                // res.json({
+                //     removed: exists
+                // });
             })
             .catch(next);
     })
