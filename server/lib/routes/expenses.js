@@ -55,8 +55,6 @@ router
             .lean()
             .then(mongoRes => res.send(mongoRes))
             .catch(next);
-    })
-    
-;
+    });
 
 module.exports = router;
