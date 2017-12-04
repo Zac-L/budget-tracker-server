@@ -29,7 +29,7 @@ router
             .lean()
             .then(expense => {
                 if(!expense) {
-                    throw { code: 404, error: `id${req.params.id} does not exist`};
+                    throw { code: 404, error: `id: '${req.params.id}' does not exist`};
                 }
                 else res.json(expense);
             })
