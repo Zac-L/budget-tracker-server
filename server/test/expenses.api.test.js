@@ -91,13 +91,10 @@ describe('expenses route testing', () => {
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(res => {
-                // console.log('after posting: ',res.body);
                 savedExpense = res.body;
                 return request.get(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                // console.log('I am res savedExpense: ',savedExpense);
-                // console.log('I am res body: ',res.body);
                 assert.deepEqual(res.body, savedExpense);
             });
     });
