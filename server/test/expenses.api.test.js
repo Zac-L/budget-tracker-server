@@ -1,6 +1,7 @@
 const { assert } = require('chai');
 const db = require('./db');
 const request = require('./request');
+const Promise = require('bluebird');
 
 describe('expenses route testing', () => {
 
