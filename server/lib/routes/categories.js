@@ -1,4 +1,3 @@
-
 const express = require('express');
 const router = express.Router();
 const Category = require('../models/category');
@@ -16,7 +15,7 @@ router
             .lean()
             .then( category => {
                 if(!category) {
-                    throw { code: 404, error: `id ${req.params.id} does not exist` };
+                    throw { code: 404, error: `id: '${req.params.id}' does not exist` };
                 }
                 else res.json(category);
             })
