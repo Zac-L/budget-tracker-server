@@ -77,9 +77,6 @@ describe('expenses route testing', () => {
                 return request.get(`/api/categories/${category._id}/expenses`);
             })
             .then(res => {
-                // console.log('I am saved: ', saved);
-                // console.log('I am res.body: ', res.body);
-                // assert.deepEqual(res.body[1], saved[1]); // TODO: figure out why this doesn't work.
                 assert.deepEqual(res.body[1].name, saved[1].name);
                 assert.equal(res.body[1].name, 'Gas');
             });
