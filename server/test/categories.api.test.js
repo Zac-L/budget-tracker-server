@@ -56,7 +56,7 @@ describe('categories', () => {
                 return request.delete(`/api/categories/${categories._id}`);
             })
             .then(res => {
-                assert.deepEqual(res.body, { removed: true });
+                assert.deepEqual(res.body, { _id: categories._id });
                 return request.get(`/api/categories/${categories._id}`);
             })
             .then(
