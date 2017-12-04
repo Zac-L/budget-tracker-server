@@ -90,13 +90,13 @@ describe('expenses route testing', () => {
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
             .then(res => {
-                console.log('after posting: ',res.body);
+                // console.log('after posting: ',res.body);
                 savedExpense = res.body;
                 return request.get(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                console.log('I am res savedExpense: ',savedExpense);
-                console.log('I am res body: ',res.body);
+                // console.log('I am res savedExpense: ',savedExpense);
+                // console.log('I am res body: ',res.body);
                 assert.deepEqual(res.body, savedExpense);
             });
     });
@@ -111,12 +111,11 @@ describe('expenses route testing', () => {
                 return request.delete(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                // console.log('removed should be true: ',res.body);
                 assert.deepEqual(res.body, { removed: true });
             });
     });
 
-    it('/PATCHES an expense by id', () => {
+    it('/PATCH an expense by id', () => {
         expense.category = category._id;
         return request.post(`/api/categories/${category._id}/expenses`)
             .send(expensesArray[0])
@@ -126,7 +125,6 @@ describe('expenses route testing', () => {
                 return request.patch(`/api/categories/${category._id}/expenses/${resPatch._id}`)
                     .send({ name: 'Drink' })
                     .then(({ body: patchRes }) => {
-                        // console.log('patched names should be Drink: ', resPatch.name, patchRes.name);
                         assert.deepEqual(resPatch.name, patchRes.name);
                     });
             });
