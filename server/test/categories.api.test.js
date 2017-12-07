@@ -68,22 +68,6 @@ describe('categories', () => {
 
     });
 
-    // Built this test out, have not written the route for it yet. Not sure if I will since I have patch route working 
-    let putCategory = { name: 'Zach', budget: '100' };
-    it.skip('/PUT updates entire object', () => {
-        return request.post('/api/categories')
-            .send(putCategory)
-            .then(({ body: resPut }) => {
-                assert.ok(resPut._id);
-                resPut.name = 'Mary';
-                return request.put(`/api/categories/${resPut._id}`)
-                    .send({ name: 'Mary' })
-                    .then(({ body: putRes }) => {
-                        assert.deepEqual(resPut.name, putRes.name);
-                    });
-            });
-    });
-
     let patchCategory = { name: 'Zach', budget: '100' };
     it('patches by id', () => {
         return request.post('/api/categories')

@@ -21,12 +21,10 @@ if(process.env.NODE_ENV === 'production') {
 // ### Required Routes ###
 const category = require('./routes/categories');
 const expense = require('./routes/expenses');
-const test = require('./routes/test');
 
 // ## Used Routes ###
 app.use('/api/categories/:categoryId/expenses', expense);
 app.use('/api/categories', category);
-app.use('/api/test', test);
 
 // ### Catchers ###
 app.use(checkDb);
