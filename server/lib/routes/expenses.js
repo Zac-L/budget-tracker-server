@@ -36,13 +36,16 @@ router
     })
 
     .delete('/:id', (req, res, next) => {
-        Expense.findByIdAndRemove(req.params.id)
-            .then(result => {
-                const exists = result != null;
-                res.json({
-                    removed: exists
-                });
-            })
+        Expense.findByIdAndRemove(req.params.id, {
+            select: '-name -cost -__v'
+        })
+            .then(result => res.json(result))
+            // .then(result => {
+            //     const exists = result != null;
+            //     res.json({
+            //         removed: exists
+            //     });
+            // })
             .catch(next);
     })
 
