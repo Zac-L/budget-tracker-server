@@ -34,13 +34,7 @@ router
         Category.findByIdAndRemove(req.params.id, {
             select: '-name -budget -__v'
         })
-            .then(result => {
-                res.json(result);
-                // const exists = result != null;
-                // res.json({
-                //     removed: exists
-                // });
-            })
+            .then(result => res.json(result))
             .catch(next);
     })
 
