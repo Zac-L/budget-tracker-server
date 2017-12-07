@@ -106,7 +106,7 @@ describe('expenses route testing', () => {
                 return request.delete(`/api/categories/${category._id}/expenses/${savedExpense._id}`);
             })
             .then(res => {
-                assert.deepEqual(res.body, { removed: true });
+                assert.deepEqual(res.body._id, savedExpense._id);
             });
     });
 
